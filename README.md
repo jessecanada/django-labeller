@@ -2,7 +2,7 @@
 
 #### A light-weight image labelling tool for Python designed for creating segmentation data sets.
 
-- currently tracking [upstream branch from the original author](https://github.com/Britefury/django-labeller)
+- currently tracking the [upstream branch from the original author](https://github.com/Britefury/django-labeller)
 
 ##### Updates:
 - on the labelling tool page, "tasks to complete" are now displayed with check boxes awaing user input (This required adding new LabellingTask objects to Django's sqlite3 database. See [this note](https://github.com/jessecanada/django-labeller/blob/master/how-to-add-new-tasks.txt) for tutorial.)
