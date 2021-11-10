@@ -2,25 +2,10 @@
 
 #### A light-weight image labelling tool for Python designed for creating segmentation data sets.
 
-- compatible with Django, Flask and Qt
-- polygon, box, point and oriented ellipse annotations supported
-- polygonal labels can have disjoint regions and can be editing using paintng and boolean operations; provided by
-  [polybooljs](https://github.com/voidqk/polybooljs)
-- can use the [DEXTR](http://people.ee.ethz.ch/~cvlsegmentation/dextr/) algorithm to automatically generate
-  polygonal outlines of objects identified by the user with a few clicks; provided by the
-  [dextr](https://github.com/Britefury/dextr) library
-  
-##### New in v0.3: schema editor for editing label classes
-  
-##### Django Labeller in action:
-![Django labeller movie](doc/dextr_boolean_cleanup_v1_small.gif "Django Labeller in action")
+##### Currently tracking [upstream branch from the original author] (https://github.com/Britefury/django-labeller)
 
---------------
-
-##### Schema editor *(new in v0.3)*:
-![Django labeller movie](doc/schema_editor.png "Schema editor")
-
---------------
+##### Updates:
+- on the labelling tool page, "tasks to complete" are now displayed with check boxes awaing user input (This required adding new LabellingTask objects to Django's sqlite3 database. See [this note](https://github.com/jessecanada/django-labeller/blob/master/how-to-add-new-tasks.txt) for tutorial.)
 
 
 
