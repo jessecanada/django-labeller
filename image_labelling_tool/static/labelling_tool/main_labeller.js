@@ -177,6 +177,12 @@ var labelling_tool;
             this.root_view_listener = {
                 // Selection changed; update annotation controls
                 on_selection_changed: function (root_view) {
+                    // JC, GC added 'label_source' to display how label was created: manual, auto:Dextr or predicted etc
+                    var selection = root_view.get_selection();
+                    var label_source_element = document.getElementById('label_source');
+                    if (label_source_element) {
+                        label_source_element.textContent = selection.map(function (s) { return s.model.source; }).join(', ');
+                    } // end JC, GC edit
                     _this._update_annotation_controls_from_views(root_view.get_selection());
                 },
                 // Root list changed; queue push
@@ -192,7 +198,7 @@ var labelling_tool;
                 timeElapsed: 0.0,
                 state: 'editable',
                 labels: [],
-                session_id: labelling_tool.ObjectIDTable.uuidv4(),
+                session_id: labelling_tool.ObjectIDTable.uuidv4()
             };
             // Active tool
             this._current_tool = null;
@@ -902,7 +908,7 @@ var labelling_tool;
                 timeElapsed: 0.0,
                 state: 'editable',
                 labels: [],
-                session_id: labelling_tool.ObjectIDTable.uuidv4(),
+                session_id: labelling_tool.ObjectIDTable.uuidv4()
             });
             this._resetStopwatch();
             for (var task_name in self._task_checkboxes) {
@@ -1319,4 +1325,3 @@ var labelling_tool;
     }());
     labelling_tool.DjangoLabeller = DjangoLabeller;
 })(labelling_tool || (labelling_tool = {}));
-//# sourceMappingURL=main_labeller.js.map

@@ -305,6 +305,12 @@ module labelling_tool {
             this.root_view_listener = {
                 // Selection changed; update annotation controls
                 on_selection_changed: (root_view: RootLabelView): void => {
+                    // JC, GC added 'label_source' to display how label was created: manual, auto:Dextr or predicted etc
+                    const selection = root_view.get_selection();
+                    const label_source_element = document.getElementById('label_source');
+                    if (label_source_element) {
+                        label_source_element.textContent = selection.map((s: AbstractLabelEntity<AbstractLabelModel>) => s.model.source).join(', ');
+                    } // end JC, GC edit
                     this._update_annotation_controls_from_views(root_view.get_selection());
                 },
                 // Root list changed; queue push

@@ -32,6 +32,8 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -124,7 +126,7 @@ var labelling_tool;
         // Point rotated to ellipse frame; multiply by transpose of m
         var p_e = {
             x: p_c.x * m[0][0] + p_c.y * m[0][1],
-            y: p_c.x * m[1][0] + p_c.y * m[1][1],
+            y: p_c.x * m[1][0] + p_c.y * m[1][1]
         };
         // Point relative to unit circle
         var p_u = { x: p_e.x / label.radius1, y: p_e.y / label.radius2 };
@@ -140,14 +142,14 @@ var labelling_tool;
         // Point rotated to ellipse frame; multiply by transpose of m
         var p_e = {
             x: p_c.x * m[0][0] + p_c.y * m[0][1],
-            y: p_c.x * m[1][0] + p_c.y * m[1][1],
+            y: p_c.x * m[1][0] + p_c.y * m[1][1]
         };
         // Compute closes point
         var cp_e = ellipseClosestPoint(label.radius1, label.radius2, p_e);
         // Rotate to relative to centre
         var cp_c = {
             x: cp_e.x * m[0][0] + cp_e.y * m[1][0],
-            y: cp_e.x * m[0][1] + cp_e.y * m[1][1],
+            y: cp_e.x * m[0][1] + cp_e.y * m[1][1]
         };
         return { x: cp_c.x + label.centre.x, y: cp_c.y + label.centre.y };
     }
@@ -376,4 +378,3 @@ var labelling_tool;
     }(labelling_tool.AbstractTool));
     labelling_tool.DrawOrientedEllipseTool = DrawOrientedEllipseTool;
 })(labelling_tool || (labelling_tool = {}));
-//# sourceMappingURL=oriented_ellipse_label.js.map

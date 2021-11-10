@@ -211,12 +211,11 @@ LABELLING_TOOL_CONFIG = {
         'brushKeyRate': 2.0,    # Change rate for brush radius (keyboard)
     }
 }
-
+# dextr settings
 LABELLING_TOOL_ENABLE_LOCKING = False
-LABELLING_TOOL_DEXTR_AVAILABLE = False
+LABELLING_TOOL_DEXTR_AVAILABLE = True
 LABELLING_TOOL_DEXTR_POLLING_INTERVAL = 1000
-LABELLING_TOOL_DEXTR_WEIGHTS_PATH = None
-
+LABELLING_TOOL_DEXTR_WEIGHTS_PATH = os.path.join(BASE_DIR, 'dextr_weights/dextr_OD.pth')
 
 
 CELERY_BROKER_URL = 'amqp://guest@localhost//'

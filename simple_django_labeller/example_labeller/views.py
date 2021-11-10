@@ -127,17 +127,37 @@ def upload_images(request):
                                                 modification_user = None
 
                                             # Unwrap the labels
-                                            labels, complete = labelling_tool.PersistentLabelledImage._unwrap_labels(
-                                                wrapped_labels)
-                                            complete = complete if isinstance(complete, bool) else False
+                                            # JC edit 11/8/21
+                                            labels, completed_tasks = labelling_tool.PersistentLabelledImage._unwrap_labels(wrapped_labels)
+                                            # Does any current LabellingTask object match completed_tasks?
+                                            for t in completed_tasks:
+                                                if lt_models.LabellingTask.objects.filter(human_name__contains = t):
+                                                    pass
+                                                else:
+                                                    # If completed_task is new, let's create a LabellingTask object
+                                                    labelling_task_model = lt_models.LabellingTask(human_name = t)
+                                                    labelling_task_model.save()
 
+                                            # Convert task names to instances
+                                            # If completed_task match one or more objects already in LabellingTasks
+                                            tasks = []
+                                            for c in completed_tasks:
+                                                tasks.append(
+                                                    lt_models.LabellingTask.objects.filter(human_name__contains = c).distinct()
+                                                )
                                             # Build labels model
                                             labels_model = lt_models.Labels(
-                                                labels_json_str=json.dumps(labels), complete=complete,
+                                                labels_json_str=json.dumps(labels),
                                                 creation_date=creation_date,
                                                 last_modified_datetime=modification_datetime,
                                                 last_modified_by=modification_user)
                                             labels_model.save()
+
+                                            if len(tasks) > 0: # JC edit
+                                                # define many-to-many relationship
+                                                for i in tasks:
+                                                    labels_model.completed_tasks.add(i)
+                                                    labels_model.save()
 
                                 if labels_model is None:
                                     # No labels loaded; create an empty labels model
@@ -262,3 +282,17 @@ def schema_editor(request):
 class SchemaEditorAPI (schema_editor_views.SchemaEditorView):
     def get_schema(self, request, *args, **kwargs):
         return lt_models.LabellingSchema.objects.get(name='default')
+
+# JC edit 3/3/21
+# still needs work
+def delete_image(request):
+    print('triggered image delete function')
+    if request.method == 'POST':
+        image_id_str = request.POST['image_id']
+        current_image = get_object_or_404(models.ImageWithLabels, id=image_id_str)
+        print(f'image_id: {current_image.id} deleted')
+        #current_image.deleteImageMedia()
+        #current_image.delete()
+    #return HttpResponse(status=200) # Glen's original implementation
+    return render(request, 'example_labeller/tool.html', {}) # this works but I don't understand why??
+    #return redirect('example_labeller:tool') # this one will cycle images backwards...not sure why?

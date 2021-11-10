@@ -1,0 +1,9 @@
+Django labeller
+
+To add a new task manually:
+
+1. enter the Django interactive shell
+2. while working in the django shell, type the following: 
+	from image_labelling_tool import models as models_lt
+	task_1 = lt_models.LabellingTask(name="new_task", human_name="New Task", enabled=True)
+	task_1.save()
