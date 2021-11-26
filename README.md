@@ -2,35 +2,16 @@
 
 #### A light-weight image labelling tool for Python designed for creating segmentation data sets.
 
-- compatible with Django, Flask and Qt
-- polygon, box, point and oriented ellipse annotations supported
-- polygonal labels can have disjoint regions and can be editing using paintng and boolean operations; provided by
-  [polybooljs](https://github.com/voidqk/polybooljs)
-- can use the [DEXTR](http://people.ee.ethz.ch/~cvlsegmentation/dextr/) algorithm to automatically generate
-  polygonal outlines of objects identified by the user with a few clicks; provided by the
-  [dextr](https://github.com/Britefury/dextr) library
-  
-##### New in v0.3: schema editor for editing label classes
-  
-##### Django Labeller in action:
-![Django labeller movie](doc/dextr_boolean_cleanup_v1_small.gif "Django Labeller in action")
+- currently tracking the [upstream branch from the original author](https://github.com/Britefury/django-labeller)
 
---------------
+##### Updates:
+- on the labelling tool page, "tasks to complete" are now displayed with check boxes awaing user input (This required adding new LabellingTask objects to Django's sqlite3 database. See [this note](https://github.com/jessecanada/django-labeller/blob/master/how-to-add-new-tasks.txt) for tutorial.)
 
-##### Schema editor *(new in v0.3)*:
-![Django labeller movie](doc/schema_editor.png "Schema editor")
-
---------------
+- the source of labels, either "manual", "auto:dextr" or "predicted" are now displayed in the Select/ Annotate section.
 
 
 
-## Django, Flask or Qt?
-
-If you want to run `django-labeller` on your local machine with minimum fuss and store the image and
-label files on your file system, use either the Flask application or the Qt application.
-
-If you want to incorporate `django-labeller` into your Django application, use the Django app/plugin as
-it provides model classes that store labels in your database, etc.
+## Currently, only the Django app is being updated in this branch.
 
 ## Installation
 
@@ -55,77 +36,6 @@ Note:
 
 
 ## Examples
-
-### Flask web app example, running on your local machine
-
-An example Flask-based web app is provided that displays the labelling tool within a web page. To start it,
-change into the same directory into which you cloned the repo and run:
- 
-```shell script
-> python -m image_labelling_tool.flask_labeller 
-```
-
-Now open `127.0.0.1:5000` within a browser.
-
-If you want to load images from a different directory, or if you installed from PyPI, tell `flask_labeller`
-where to look:
-
-```shell script
-> python -m image_labelling_tool.flask_labeller --images_pat=<images_directory>/*.<jpg|png>
-```
-
-
-#### Flask app with DEXTR assisted labelling
-
-First, install the [dextr](https://github.com/Britefury/dextr) library:
-
-```shell script
-> pip install dextr
-```
-
-Now tell the Flask app to enable DEXTR using the `--enable_dextr` option:
-
-```shell script
-> python -m image_labelling_tool.flask_labeller --enable_dextr
-````
- 
-The above will use the ResNet-101 based DEXTR model trained on Pascal VOC 2012 that is provided by
-the dextr library. 
-If you want to use a custom DEXTR model that you trained for your purposes, use the `--dextr_weights` option:
-
-```shell script
-> python -m image_labelling_tool.flask_labeller --dextr_weights=path/to/model.pth
-````
-
-### Qt desktop application
-
-##### Requirements
-`PyQt5` and `flask` need to be installed, both of which can be installed using `conda` if
-using an Anaconda distribution.  
-Optionally install [PyTorch](https://pytorch.org) and
-the [dextr](https://github.com/Britefury/dextr) library if you want to use a DEXTR model for
-automatically assisted annotation.
-
-##### Running
-
-A simple Qt-based desktop application allows you to choose a directory of images to label. To start it,
-change into the same directory into which you cloned the repo and run:
-
-```shell script
-> python -m image_labelling_tool_qt.simple_labeller 
-```
-
-A dialog will appear prompting you to choose a directory of images to label. The *Enable DEXTR*
-checkbox will enable DEXTR assisted automated labelling. Note that this requires that
-[PyTorch](https://pytorch.org) and the [dextr](https://github.com/Britefury/dextr) library are
-both installed in your Python environment.
-
-The Qt desktop application uses QWebEngine to show the web-based component in a Qt UI.
-A Flask server is started in the background that serves the tool HTML, static files and
-images.
-
-
-
 
 ### Django web app example
 
@@ -200,6 +110,74 @@ Note that Celery v4 and above are not strictly compatible with Windows, but it c
 ```shell script
 > celery -A example_labeller_app worker --pool=solo -l info
 ```
+### Flask web app example, running on your local machine
+
+An example Flask-based web app is provided that displays the labelling tool within a web page. To start it,
+change into the same directory into which you cloned the repo and run:
+ 
+```shell script
+> python -m image_labelling_tool.flask_labeller 
+```
+
+Now open `127.0.0.1:5000` within a browser.
+
+If you want to load images from a different directory, or if you installed from PyPI, tell `flask_labeller`
+where to look:
+
+```shell script
+> python -m image_labelling_tool.flask_labeller --images_pat=<images_directory>/*.<jpg|png>
+```
+
+
+#### Flask app with DEXTR assisted labelling
+
+First, install the [dextr](https://github.com/Britefury/dextr) library:
+
+```shell script
+> pip install dextr
+```
+
+Now tell the Flask app to enable DEXTR using the `--enable_dextr` option:
+
+```shell script
+> python -m image_labelling_tool.flask_labeller --enable_dextr
+````
+ 
+The above will use the ResNet-101 based DEXTR model trained on Pascal VOC 2012 that is provided by
+the dextr library. 
+If you want to use a custom DEXTR model that you trained for your purposes, use the `--dextr_weights` option:
+
+```shell script
+> python -m image_labelling_tool.flask_labeller --dextr_weights=path/to/model.pth
+````
+
+### Qt desktop application
+
+##### Requirements
+`PyQt5` and `flask` need to be installed, both of which can be installed using `conda` if
+using an Anaconda distribution.  
+Optionally install [PyTorch](https://pytorch.org) and
+the [dextr](https://github.com/Britefury/dextr) library if you want to use a DEXTR model for
+automatically assisted annotation.
+
+##### Running
+
+A simple Qt-based desktop application allows you to choose a directory of images to label. To start it,
+change into the same directory into which you cloned the repo and run:
+
+```shell script
+> python -m image_labelling_tool_qt.simple_labeller 
+```
+
+A dialog will appear prompting you to choose a directory of images to label. The *Enable DEXTR*
+checkbox will enable DEXTR assisted automated labelling. Note that this requires that
+[PyTorch](https://pytorch.org) and the [dextr](https://github.com/Britefury/dextr) library are
+both installed in your Python environment.
+
+The Qt desktop application uses QWebEngine to show the web-based component in a Qt UI.
+A Flask server is started in the background that serves the tool HTML, static files and
+images.
+
 
 
 ## API and label access
