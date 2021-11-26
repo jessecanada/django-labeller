@@ -2,4 +2,5 @@ from django import forms
 
 
 class ImageUploadForm (forms.Form):
-    file = forms.FileField()
+    # JC edit: multipe image upload
+    file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple':True}))
