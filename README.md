@@ -69,19 +69,16 @@ Then run the app:
 > python simple_django_labeller/manage.py runserver
 ```
 
-#### Django app with DEXTR assisted labelling
+#### To enable DEXTR assisted labelling in the Django app
 
-First, install the [dextr](https://github.com/Britefury/dextr) library and [celery](http://www.celeryproject.org/):
-
+1. Install the [dextr](https://github.com/Britefury/dextr) library and [celery](http://www.celeryproject.org/):
 ```shell script
 > pip install dextr
 > pip install celery
 ```
-
-Now install [RabbitMQ](https://www.rabbitmq.com/), using the appropriate approach for your platform (you could use
+2. Install [RabbitMQ](https://www.rabbitmq.com/), using the appropriate approach for your platform (you could use
 a different Celery backend if you don't mind editing `settings.py` as needed). 
-
-Enable DEXTR within `tests/example_labeller_app/settings.py`; change the line
+3. Enable DEXTR within `tests/example_labeller_app/settings.py`; change the line
 
 ```py3
 LABELLING_TOOL_DEXTR_AVAILABLE = False
@@ -93,7 +90,7 @@ You can also change the `LABELLING_TOOL_DEXTR_WEIGHTS_PATH` option to a path to 
 the default ResNet-101 based U-net trained on Pascal VOC 2012 provided by the dextr library will be used.
 
 
-To run the Django application:
+#### To run the Django application:
 
 1. If rabbitmq-server isn't already running (verify satus using ```rabbitmqctl status```):
 ```shell script
