@@ -92,14 +92,19 @@ so that `LABELLING_TOOL_DEXTR_AVAILABLE` is set to `True`.
 You can also change the `LABELLING_TOOL_DEXTR_WEIGHTS_PATH` option to a path to a custom model, otherwise
 the default ResNet-101 based U-net trained on Pascal VOC 2012 provided by the dextr library will be used.
 
-Now run the Django application:
 
+To run the Django application:
+
+1. If rabbitmq-server isn't already running (verify satus using ```rabbitmqctl status```):
+```shell script
+> rabbitmq-server -detached
+```
+2. Start the Django app 
 ```shell script
 > cd simple_django_labeller
 > python manage.py runserver
 ```
-
-Now start a celery worker:
+3. Start a celery worker:
 
 ```shell script
 > cd simple_django_labeller
