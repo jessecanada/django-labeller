@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>UEA Computer Vision - Labelling Tool</title>
+        <title>Segmentation Data Labelling Tool</title>
 
         <link rel="stylesheet" href="/static/bootstrap-4.3.1.min.css">
         <link rel="stylesheet" href="/static/open-iconic/css/open-iconic-bootstrap.css">
@@ -25,7 +25,7 @@
 
         <h1>Simple Django Labeller App</h1>
 
-        <p>An example image labeller.</p>
+        <p>Annotate or view image segmentation dataset with this intuitive web app.</p>
 
         {% if message == 'unknown_upload_filetype' %}
             <p style="color: #ff4080">Error: unknown upload file type; please upload PNG, JPEG or ZIP files.</p>
@@ -58,7 +58,7 @@
                         {% csrf_token %}
                         <p>Please upload either:</p>
                         <ul>
-                            <li>Single JPEG or PNG image files</li>
+                            <li>JPEG or PNG image files</li>
                             <li>A ZIP file containing JPEGS or PNGS with label files (same name with <code>__labels.json</code> suffix)</li>
                         </ul>
                         <p>{{ upload_form.file }}</p>
