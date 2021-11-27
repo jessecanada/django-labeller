@@ -1,0 +1,35 @@
+# dextr model file
+simple_django_labeller/dextr_weights/
+
+# Django media and database
+simple_django_labeller/media/
+simple_django_labeller/db.sqlite3
+
+# Byte-compiled / optimized
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
+
+# Django stuff:
+*.log
+*.pot
+
+# Distribution / packaging
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
