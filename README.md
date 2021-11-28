@@ -114,6 +114,7 @@ Note that Celery v4 and above are not strictly compatible with Windows, but it c
 5. ```shell script
 6. > rabbitmqctl stop
 7. ```
+8. 
 ### Flask web app example, running on your local machine
 
 An example Flask-based web app is provided that displays the labelling tool within a web page. To start it,
