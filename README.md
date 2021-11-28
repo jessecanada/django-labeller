@@ -111,10 +111,10 @@ Note that Celery v4 and above are not strictly compatible with Windows, but it c
 > celery -A example_labeller_app worker --pool=solo -l info
 ```
 4. To stop rabbitmq-server:
-5. ```shell script
-6. > rabbitmqctl stop
-7. ```
-8. 
+```shell script
+> rabbitmqctl stop
+```
+ 
 ### Flask web app example, running on your local machine
 
 An example Flask-based web app is provided that displays the labelling tool within a web page. To start it,
