@@ -106,10 +106,13 @@ the default ResNet-101 based U-net trained on Pascal VOC 2012 provided by the de
 > cd simple_django_labeller
 > celery -A example_labeller_app worker -l info
 ```
-Note that Celery v4 and above are not strictly compatible with Windows, but it can work if you run:
+---
+***Note***
+Celery v4 or above is not strictly compatible with Windows, but it can work if you run:
 ```shell script
 > celery -A example_labeller_app worker --pool=solo -l info
 ```
+---
 4. To stop rabbitmq-server:
 ```shell script
 > rabbitmqctl stop
