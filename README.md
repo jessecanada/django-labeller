@@ -102,16 +102,18 @@ the default ResNet-101 based U-net trained on Pascal VOC 2012 provided by the de
 > python manage.py runserver
 ```
 3. Start a celery worker:
-
 ```shell script
 > cd simple_django_labeller
 > celery -A example_labeller_app worker -l info
 ```
-
 Note that Celery v4 and above are not strictly compatible with Windows, but it can work if you run:
 ```shell script
 > celery -A example_labeller_app worker --pool=solo -l info
 ```
+4. To stop rabbitmq-server:
+5. ```shell script
+6. > rabbitmqctl stop
+7. ```
 ### Flask web app example, running on your local machine
 
 An example Flask-based web app is provided that displays the labelling tool within a web page. To start it,
