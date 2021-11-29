@@ -3,13 +3,21 @@ from django.db import models
 from image_labelling_tool import models as lt_models
 import django.utils.timezone
 
-# Create your models here.
+import os
+from example_labeller_app import settings
+
+# models for example_labeller app
+# create your models here
 class ImageWithLabels (models.Model):
     # image
     image = models.ImageField(blank=True)
 
     # labels
     labels = models.ForeignKey(lt_models.Labels, models.CASCADE, related_name='image')
+
+    # JC edit => delete image button implementation
+    def deleteImageMedia(self, *args, **kwargs):
+        os.remove(os.path.join(settings.MEDIA_ROOT, self.image.name))
 
 
 class DextrTask (models.Model):

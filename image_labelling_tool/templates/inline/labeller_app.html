@@ -28,6 +28,11 @@
             {% if not labelling_tool_config.settings.fullscreenButton == False %}
                 <button class="btn btn-sm btn-info" id="btn_fullscreen"><span class="oi oi-fullscreen-enter"></span> Fullscreen</button>
             {% endif %}
+
+            <!-- JC edit 3/3/21-->
+            <div class="labeller_menu_sep"></div>
+
+            <button id="delete-image-btn" class="btn btn-sm btn-danger"> Delete </button>
     </nav>
 
     <!-- Toolbar !-->
@@ -426,9 +431,30 @@
     {% endif %}
 {% endfor %}
 
+<!-- JC edit 3/3/21 deleteImage pop up -->
+<div class="modal" id="delete-image" tabindex="-1" role="dialog" aria-labelledby="help_modal_title"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="help_modal_title">Confirm delete image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button id='myButton' class="btn btn-danger" type="button" data-dismiss="modal">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-<!-- Confirm delete -->
+<!-- Confirm delete label -->
 <div class="modal" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="help_modal_title"
      aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">

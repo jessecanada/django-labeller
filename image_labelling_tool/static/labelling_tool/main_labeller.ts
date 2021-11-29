@@ -131,6 +131,7 @@ module labelling_tool {
         private _images: ImageModel[];
         private _num_images: number;
         private _requestLabelsCallback: any;
+        private _deleteImageCallback: any; //GC, JC edit
         private _sendLabelHeaderFn: any;
         private _getUnlockedImageIDCallback: any;
         private _dextrCallback: any;
@@ -179,11 +180,17 @@ module labelling_tool {
 
 
 
-        constructor(schema: LabellingSchemaJSON, tasks: TasksJSON[],
+        constructor(schema: LabellingSchemaJSON, 
+                    tasks: TasksJSON[],
                     anno_controls_json: AnnoControlJSON[],
-                    images: ImageModel[], initial_image_index: number,
-                    requestLabelsCallback: any, sendLabelHeaderFn: any,
-                    getUnlockedImageIDCallback: any, dextrCallback: any, dextrPollingInterval: number,
+                    images: ImageModel[],
+                    initial_image_index: number,
+                    requestLabelsCallback: any,
+                    deleteImageCallback: any, // GC, JC edit
+                    sendLabelHeaderFn: any,
+                    getUnlockedImageIDCallback: any,
+                    dextrCallback: any,
+                    dextrPollingInterval: number,
                     config: any) {
             /*
             schema: the schema provides the label class definitions and colour scheme definitions in JSON format
@@ -369,6 +376,8 @@ module labelling_tool {
 
             // Data request callback; labelling tool will call this when it needs a new image to show
             this._requestLabelsCallback = requestLabelsCallback;
+            // GC, JC edit deleteImage request call
+            this._deleteImageCallback = deleteImageCallback;
             // Send data callback; labelling tool will call this when it wants to commit data to the backend in response
             // to user action
             this._sendLabelHeaderFn = sendLabelHeaderFn;
@@ -459,6 +468,29 @@ module labelling_tool {
                     event.preventDefault();
                 });
 
+                // GC, JC edit => deleteImage button implementation
+                var deleteImageButton: any = $('#delete-image-btn');
+                deleteImageButton.click(function(event: any) {
+                    var deleteImageConfirmDialog = $('#delete-image');
+                    deleteImageConfirmDialog.modal({show: true});
+
+                    var myButton: any = $('#myButton');
+                    myButton.click(function (event: any) {
+                        const imageId = self._get_current_image_id();
+                        self._deleteImageCallback(imageId, () => {
+                            // TODO insert logic to check imageID is not 0
+                            // 
+                            if (parseInt(imageId) > 1) {
+                                _increment_image_index(-1);
+                            } else {
+                                _increment_image_index(1);
+                            };
+                        });
+                        event.preventDefault();
+                        //deleteImageConfirmDialog.modal({show: false});
+                    });
+                });
+               
                 if (this._getUnlockedImageIDCallback !== null && this._getUnlockedImageIDCallback !== undefined) {
                     var next_unlocked_image_button: any = $('#btn_next_unlocked_image');
                     next_unlocked_image_button.click(function (event: any) {

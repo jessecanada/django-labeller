@@ -23,6 +23,29 @@
                 });
             };
 
+            // GC, JC edit => deleteImage button implementation
+             var deleteImage = function(image_id, successCallback) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ delete_image_url }}',
+                    data: {  
+                        image_id: image_id
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // debugger;
+                    },
+                    complete: function(response) {
+                        console.log(response);
+                        if (response.status === 200 && successCallback) {
+                            successCallback();
+                        }
+                    },  
+                    dataType: 'json'
+                });
+            };
+            // end JC edit
+
             {% if enable_locking %}
                 var get_unlocked_image_id = function(image_ids) {
                     var request = {
@@ -96,6 +119,7 @@
                 var dextr_request = null;
             {% endif %}
 
+            // GC, JC edit
             var tool = new labelling_tool.DjangoLabeller(
                 {{ labelling_schema | as_json | safe }},
                 {{ tasks | as_json | safe }},
@@ -103,6 +127,7 @@
                 {{ image_descriptors | as_json | safe }},
                 {{ initial_image_index | safe }},
                 get_labels,
+                deleteImage,
                 update_labels,
                 get_unlocked_image_id,
                 dextr_request,

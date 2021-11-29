@@ -24,10 +24,12 @@ def _update_config(dest, src):
                 dest[key] = value
 
 
+# JC edit deleteImage button implementation
 @register.inclusion_tag('inline/image_labeller.html', name='labelling_tool')
 def labelling_tool(image_descriptors, labelling_schema, initial_image_index,
-                   labelling_tool_url, tasks=None, anno_controls=None, enable_locking=False, dextr_available=False, dextr_polling_interval=None,
-                   config=None):
+                   labelling_tool_url, delete_image_url, tasks=None, 
+                   anno_controls=None, enable_locking=False, dextr_available=False, 
+                   dextr_polling_interval=None, config=None):
     if config is None:
         config = {}
     if dextr_polling_interval is not None:
@@ -59,6 +61,7 @@ def labelling_tool(image_descriptors, labelling_schema, initial_image_index,
         'num_images': len(image_descriptors),
         'initial_image_index': str(initial_image_index),
         'labelling_tool_url': labelling_tool_url,
+        'delete_image_url': delete_image_url, # JC edit
         'enable_locking': enable_locking,
         'dextr_available': dextr_available,
         'dextr_polling_interval': dextr_polling_interval,

@@ -1,4 +1,6 @@
 import os, datetime, json, tempfile, zipfile
+
+from django.http.response import HttpResponseRedirect
 import celery.result
 
 from PIL import Image
@@ -292,5 +294,5 @@ def delete_image(request):
         #current_image.deleteImageMedia()
         #current_image.delete()
     #return HttpResponse(status=200) # Glen's original implementation
-    return render(request, 'example_labeller/tool.html', {}) # this works but I don't understand why??
-    #return redirect('example_labeller:tool') # this one will cycle images backwards...not sure why?
+    return render(request, 'tool.html', {}) # image ID decrease by 1
+   # TODO: fix so that total image count is refreshed to reflect the delete

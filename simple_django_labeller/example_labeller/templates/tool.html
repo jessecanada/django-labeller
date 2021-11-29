@@ -20,8 +20,17 @@
 
 
     {% url 'example_labeller:labelling_tool_api' as ltapi_url %}
-
-    {% labelling_tool image_descriptors labelling_schema initial_image_index ltapi_url tasks=tasks anno_controls=anno_controls enable_locking=enable_locking dextr_available=dextr_available dextr_polling_interval=dextr_polling_interval config=labelling_tool_config %}
+    <!-- JC edit -->
+    {% url 'example_labeller:delete_image' as delete_image_url %}
+    <!-- note: labelling_tool is a template tag defined in: -->
+    <!-- image_labelling_tool/templatetags/labelling_tool_tags -->
+    <!-- labelling_tool(label_class_groups, image_descriptors, 
+                        color_schemes, initial_image_index,
+                        labelling_tool_url, tasks=None, 
+                        anno_controls=None, enable_locking=False, 
+                        dextr_available=False, dextr_polling_interval=None,
+                        config=None) -->
+    {% labelling_tool image_descriptors labelling_schema initial_image_index ltapi_url delete_image_url tasks=tasks anno_controls=anno_controls enable_locking=enable_locking dextr_available=dextr_available dextr_polling_interval=dextr_polling_interval config=labelling_tool_config %}
 
 
     </body>

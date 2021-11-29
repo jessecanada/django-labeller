@@ -65,7 +65,8 @@ var labelling_tool;
    Labelling tool view; links to the server side data structures
     */
     var DjangoLabeller = /** @class */ (function () {
-        function DjangoLabeller(schema, tasks, anno_controls_json, images, initial_image_index, requestLabelsCallback, sendLabelHeaderFn, getUnlockedImageIDCallback, dextrCallback, dextrPollingInterval, config) {
+        function DjangoLabeller(schema, tasks, anno_controls_json, images, initial_image_index, requestLabelsCallback, deleteImageCallback, // GC, JC edit
+        sendLabelHeaderFn, getUnlockedImageIDCallback, dextrCallback, dextrPollingInterval, config) {
             var _this = this;
             this._label_class_selector_select = null;
             this._label_class_selector_popup = null;
@@ -233,6 +234,8 @@ var labelling_tool;
             this._stopwatchHandle = null;
             // Data request callback; labelling tool will call this when it needs a new image to show
             this._requestLabelsCallback = requestLabelsCallback;
+            // GC, JC edit deleteImage request call
+            this._deleteImageCallback = deleteImageCallback;
             // Send data callback; labelling tool will call this when it wants to commit data to the backend in response
             // to user action
             this._sendLabelHeaderFn = sendLabelHeaderFn;
@@ -308,6 +311,29 @@ var labelling_tool;
                 }).click(function (event) {
                     _increment_image_index(1);
                     event.preventDefault();
+                });
+                // GC, JC edit => deleteImage button implementation
+                var deleteImageButton = $('#delete-image-btn');
+                deleteImageButton.click(function (event) {
+                    var deleteImageConfirmDialog = $('#delete-image');
+                    deleteImageConfirmDialog.modal({ show: true });
+                    var myButton = $('#myButton');
+                    myButton.click(function (event) {
+                        var imageId = self._get_current_image_id();
+                        self._deleteImageCallback(imageId, function () {
+                            // TODO insert logic to check imageID is not 0
+                            // 
+                            if (parseInt(imageId) > 1) {
+                                _increment_image_index(-1);
+                            }
+                            else {
+                                _increment_image_index(1);
+                            }
+                            ;
+                        });
+                        event.preventDefault();
+                        //deleteImageConfirmDialog.modal({show: false});
+                    });
                 });
                 if (this._getUnlockedImageIDCallback !== null && this._getUnlockedImageIDCallback !== undefined) {
                     var next_unlocked_image_button = $('#btn_next_unlocked_image');
