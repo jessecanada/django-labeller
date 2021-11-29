@@ -1,9 +1,5 @@
 # dextr model file
-simple_django_labeller/dextr_weights/
-
-# Django media and database
-simple_django_labeller/media/
-simple_django_labeller/db.sqlite3
+#simple_django_labeller/dextr_weights/
 
 # Byte-compiled / optimized
 __pycache__/

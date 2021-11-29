@@ -215,7 +215,8 @@ LABELLING_TOOL_CONFIG = {
 LABELLING_TOOL_ENABLE_LOCKING = False
 LABELLING_TOOL_DEXTR_AVAILABLE = True
 LABELLING_TOOL_DEXTR_POLLING_INTERVAL = 1000
-LABELLING_TOOL_DEXTR_WEIGHTS_PATH = os.path.join(BASE_DIR, 'dextr_weights/dextr_OD.pth')
+# change 'dextr_weights_name' to the .pth file of trained weights
+LABELLING_TOOL_DEXTR_WEIGHTS_PATH = os.path.join(BASE_DIR, 'dextr_weights/'+'dextr_weights_name')
 
 
 CELERY_BROKER_URL = 'amqp://guest@localhost//'
