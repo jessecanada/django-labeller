@@ -1,6 +1,6 @@
 import os, datetime, json, tempfile, zipfile
 
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect, HttpResponse
 import celery.result
 
 from PIL import Image
@@ -35,7 +35,7 @@ def home(request):
     context = {
         'upload_form': upload_form,
         'message': message,
-        'num_images': len(models.ImageWithLabels.objects.all())
+        'num_images': len(models.ImageWithLabels.objects.all()) # doesn't affect the total image count on the tool page?
     }
     return render(request, 'index.html', context)
 
@@ -293,6 +293,6 @@ def delete_image(request):
         print(f'image_id: {current_image.id} deleted')
         #current_image.deleteImageMedia()
         #current_image.delete()
-    #return HttpResponse(status=200) # Glen's original implementation
-    return render(request, 'tool.html', {}) # image ID decrease by 1
+    return HttpResponse(status=200) # Glen's original implementation
+    #return render(request, 'tool.html', {}) # image ID decrease by 1
    # TODO: fix so that total image count is refreshed to reflect the delete
