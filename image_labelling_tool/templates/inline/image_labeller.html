@@ -33,13 +33,13 @@
                     },
                     success: function(response) {
                         console.log(response);
-                        location.reload(); // reload page?
                         // debugger;
                     },
                     complete: function(response) {
                         console.log(response);
                         if (response.status === 200 && successCallback) {
                             successCallback();
+                            location.reload(); // reload page after deleting image
                         }
                     },  
                     dataType: 'json'
