@@ -1,12 +1,8 @@
 # dextr model file
 simple_django_labeller/dextr_weights/
 
-<<<<<<< Updated upstream
-# django media files
-=======
 # django database and media files
 simple_django_labeller/db.sqlite3
->>>>>>> Stashed changes
 simple_django_labeller/media/
 
 # Byte-compiled / optimized
