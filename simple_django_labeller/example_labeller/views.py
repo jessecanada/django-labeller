@@ -1,6 +1,6 @@
 import os, datetime, json, tempfile, zipfile
 
-from django.http.response import HttpResponseRedirect, HttpResponse
+from django.http.response import HttpResponseRedirect, HttpResponse, JsonResponse
 import celery.result
 
 from PIL import Image
@@ -285,14 +285,14 @@ class SchemaEditorAPI (schema_editor_views.SchemaEditorView):
 
 # JC edit 3/3/21
 # still needs work
+# move under LabelingToolAPI when have time 
 def delete_image(request):
     print('triggered image delete function')
     if request.method == 'POST':
         image_id_str = request.POST['image_id']
         current_image = get_object_or_404(models.ImageWithLabels, id=image_id_str)
         print(f'image_id: {current_image.id} deleted')
-        #current_image.deleteImageMedia()
-        #current_image.delete()
-    return HttpResponse(status=200) # Glen's original implementation
-    #return render(request, 'tool.html', {}) # image ID decrease by 1
-   # TODO: fix so that total image count is refreshed to reflect the delete
+        current_image.deleteImageMedia()
+        current_image.delete()
+        num_images = len(models.ImageWithLabels.objects.all())
+    return JsonResponse({ 'num_images': num_images}) # GC implementation

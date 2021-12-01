@@ -320,16 +320,17 @@ var labelling_tool;
                     var myButton = $('#myButton');
                     myButton.click(function (event) {
                         var imageId = self._get_current_image_id();
-                        self._deleteImageCallback(imageId, function () {
-                            // TODO insert logic to check imageID is not 0
-                            // 
-                            if (parseInt(imageId) > 1) {
-                                _increment_image_index(-1);
-                            }
-                            else {
-                                _increment_image_index(1);
-                            }
-                            ;
+                        self._deleteImageCallback(imageId, function (num_images) {
+                            // increment/decrement current index
+                            var offset = parseInt(imageId) > 1 ? -1 : 1;
+                            _increment_image_index(offset);
+                            // delete imageId from self._images
+                            var index = self._image_id_to_index(imageId);
+                            console.log("before:", self._images);
+                            self._images.splice(index, 1);
+                            console.log("after:", self._images);
+                            // update id=total_num_images with the new num_images
+                            self._update_total_num_images(num_images);
                         });
                         event.preventDefault();
                         //deleteImageConfirmDialog.modal({show: false});
@@ -868,6 +869,14 @@ var labelling_tool;
             return handled;
         };
         ;
+        // GC edit
+        DjangoLabeller.prototype._update_total_num_images = function (num_images) {
+            this._num_images = num_images;
+            var container = document.getElementById("total_num_images");
+            if (container) {
+                container.textContent = String(num_images);
+            }
+        };
         DjangoLabeller.prototype._image_id_to_index = function (image_id) {
             for (var i = 0; i < this._images.length; i++) {
                 if (this._images[i].image_id === image_id) {

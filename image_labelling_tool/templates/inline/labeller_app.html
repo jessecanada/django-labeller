@@ -10,7 +10,7 @@
                 <input type="number" class="form-control btn-sm bg-secondary image-chooser-control text-light"
                        id="image_index_input"
                        name="image_index" data-toggle="tooltip" data-placement="top" title="Choose image">
-                    / {{ num_images }}
+                    / <span id="total_num_images">{{ num_images }}</span>
                 <button type="button" class="btn btn-sm btn-warning btn-xs" id="btn_next_image" data-toggle="tooltip"
                         data-placement="top" title="Next image"><span class="oi oi-chevron-right"></span></button>
                 {% if enable_locking %}

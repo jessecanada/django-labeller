@@ -38,8 +38,8 @@
                     complete: function(response) {
                         console.log(response);
                         if (response.status === 200 && successCallback) {
-                            successCallback();
-                            location.reload(); // reload page after deleting image
+                            successCallback(response.responseJSON.num_images);
+                            // location.reload(); // force reload page after deleting image
                         }
                     },  
                     dataType: 'json'

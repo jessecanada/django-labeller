@@ -477,18 +477,21 @@ module labelling_tool {
                     var myButton: any = $('#myButton');
                     myButton.click(function (event: any) {
                         const imageId = self._get_current_image_id();
-                        self._deleteImageCallback(imageId, () => {
-                            // TODO insert logic to check imageID is not 0
-                            // 
-                            if (parseInt(imageId) > 1) {
-                                _increment_image_index(-1);
-                            } else {
-                                _increment_image_index(1);
-                            };
+                        self._deleteImageCallback(imageId, (num_images: number) => {
+                            // increment/decrement current index
+                            const offset = parseInt(imageId) > 1 ? -1 : 1;
+                            _increment_image_index(offset);
+
+                            // delete imageId from self._images
+                            const index = self._image_id_to_index(imageId);
+                            self._images.splice(index, 1);
+
+                            // update id=total_num_images with the new num_images
+                            self._update_total_num_images(num_images);
                         });
                         event.preventDefault();
                         //deleteImageConfirmDialog.modal({show: false});
-                    });
+                    });``
                 });
                
                 if (this._getUnlockedImageIDCallback !== null && this._getUnlockedImageIDCallback !== undefined) {
@@ -1125,6 +1128,15 @@ module labelling_tool {
             }
             return handled;
         };
+
+        // GC edit
+        _update_total_num_images(num_images: number) {
+            this._num_images = num_images;
+            const container = document.getElementById("total_num_images");
+            if (container) {
+                container.textContent = String(num_images);
+            }
+        }
 
         _image_id_to_index(image_id: string) {
             for (var i = 0; i < this._images.length; i++) {
